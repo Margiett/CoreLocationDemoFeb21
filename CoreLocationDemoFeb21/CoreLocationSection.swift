@@ -33,6 +33,20 @@ class CoreLocationSession: NSObject {
         // get updates for user location
         locationManger.startUpdatingLocation()
     }
+    public func convertCoordinateToPlacemark(coordinate: CLLocationCoordinate2D){
+        // we will use the CLGeoder() class for converting coordinate (CLLocationCoodinate2D) to placemark (CLPlacemark)
+        
+        // we need to create CLLocation
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            if let error = error {
+                print("reverseGeocodeLocation: \(error)")
+            }
+            if let firstPlacemark = placemarks?.first {
+                print("firstPlacemark info: \(firstPlacemark)")
+            }
+        }
+    }
 }
 
 extension CoreLocationSession: CLLocationManagerDelegate {
